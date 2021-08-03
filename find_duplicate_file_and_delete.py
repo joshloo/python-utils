@@ -23,7 +23,11 @@ def check_for_duplicates(paths, hash=hashlib.sha1):
                 duplicate = hashes.get(file_id, None)
                 if duplicate:
                     print("Duplicate found: %s and %s" % (full_path, duplicate))
-                    os.remove(duplicate)
+                    try:
+                        os.remove(duplicate)
+                    except OSError as e:
+                        print("Already deleted\n\n")
+                        continue
                 else:
                     hashes[file_id] = full_path
 
