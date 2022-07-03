@@ -17,10 +17,13 @@ def check_for_duplicates(paths, hash=hashlib.sha1):
             for filename in filenames:
                 full_path = os.path.join(dirpath, filename)
                 hashobj = hash()
+                print("hashobj: ", hashobj)
                 for chunk in chunk_reader(open(full_path, 'rb')):
                     hashobj.update(chunk)
                 file_id = (hashobj.digest(), os.path.getsize(full_path))
+                print("file_id: ", file_id)
                 duplicate = hashes.get(file_id, None)
+                print("duplicate: ", duplicate)
                 if duplicate:
                     print("Duplicate found: %s and %s" % (full_path, duplicate))
                     try:
